@@ -107,13 +107,16 @@ $(".button_count").click(function() {
 
 });
 
+
 var prevScrollpos = window.pageYOffset;
 window.onscroll = function() {
     var currentScrollPos = window.pageYOffset;
     if (prevScrollpos > currentScrollPos) {
         $(".header .top-header").removeClass('active');
+        $(".header .menu-header-detail").removeClass('scroll-menu-detail');
     } else {
         $(".header .top-header").addClass('active');
+        $(".header .menu-header-detail").addClass('scroll-menu-detail');
     }
     prevScrollpos = currentScrollPos;
 }
@@ -121,14 +124,42 @@ window.onscroll = function() {
 $(".active-detail-bar.m-bar").hover(
 
     $(".active-detail-bar.m-bar").mouseover(function() {
-        $('.menu-header').addClass("active-hover");
+        $('.menu-header-detail').addClass("active-hover");
     }).mouseout(function() {
-        $('.menu-header').removeClass("active-hover");
+        $('.menu-header-detail').removeClass("active-hover");
     }),
-    $('.menu-header').mouseover(function() {
-        $('.menu-header').addClass("active-hover");
+    $('.menu-header-detail').mouseover(function() {
+        $('.menu-header-detail').addClass("active-hover");
     }).mouseout(function() {
-        $('.menu-header').removeClass("active-hover");
+        $('.menu-header-detail').removeClass("active-hover");
     }),
 
 );
+var checkPagination = $("#linkPagination ul li").eq(1).hasClass("active");
+if (checkPagination == true) {
+    $("#linkPagination ul li").eq(0).addClass("opacityPagination");
+} else {
+    if ($("#linkPagination ul li").last().prev().hasClass("active") == true) {
+        $("#linkPagination ul li").last().addClass("opacityPagination");
+    }
+}
+
+$(".button_count_cart_order").click(function() {
+
+    var oldValue;
+
+    if (this.getAttribute('value') == "plus") {
+        oldValue = $(this).prev(".count_item_order_cart").val();
+        var newVal = parseFloat(oldValue) + 1;
+        $(this).prev(".count_item_order_cart").val(newVal);
+    } else {
+        oldValue = $(this).next(".count_item_order_cart").val();
+        if (oldValue > 1) {
+            var newVal = parseFloat(oldValue) - 1;
+        } else {
+            newVal = 1;
+        }
+        $(this).next(".count_item_order_cart").val(newVal);
+    }
+
+});
